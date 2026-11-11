@@ -21,5 +21,7 @@ public class Map_Awal extends World
         GreenfootImage bg = new GreenfootImage("Lahan.jpg");
         bg.scale(960, 540);
         setBackground(bg);
+        
+        addObject(new Player(), 30, 205);
     }
 }
