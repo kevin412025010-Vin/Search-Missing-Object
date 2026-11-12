@@ -22,6 +22,12 @@ public class Map_Awal extends World
         bg.scale(960, 540);
         setBackground(bg);
         
-        addObject(new Player(), 30, 205);
+        setPaintOrder(Player.class, Rumah.class);
+        
+        addObject(new Rumah("Rumah_Easy.png", "easy", 210), 487, 170);
+        addObject(new Rumah("Rumah_Normal.png", "normal", 190), 782, 165);
+        //addObject(new Rumah("Rumah_Hard.png", "hard", 240), 375, 310);
+        
+        addObject(new Player(), 30, 190);
     }
 }
