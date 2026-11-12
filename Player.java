@@ -16,18 +16,16 @@ public class Player extends Actor
     private GreenfootImage gBelakang;
     private GreenfootImage gDepan;
 
-    // ukuran sprite kelinci
-    private int ukuran = 48;
+    private int ukuran = 50;
 
     // untuk animasi lompat
     private int timer = 0;
     private boolean bergerak = false;
-    private int lamaLompat = 24;   // makin kecil = lompat makin cepat
-    private int tinggiLompat = 14; // tinggi lompatan (piksel)
+    private int lamaLompat = 24;   
+    private int tinggiLompat = 14; 
 
     public static int LEBAR = 28;
 
-    // tiap garis: {x1, y1, x2, y2, lebar}
     public static int[][] JALUR =
     {
         {  50, 210, 145, 233, 28 },
