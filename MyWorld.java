@@ -23,7 +23,7 @@ public class MyWorld extends World
         
         GreenfootImage judul = new GreenfootImage("Judul.png");
         judul.scale(480, judul.getHeight() * 480 / judul.getWidth());
-        bg.drawImage(judul, (960 - judul.getWidth()) / 2, 5);
+        bg.drawImage(judul, (960 - judul.getWidth()) / 2, 2);
         
         setBackground(bg);
 

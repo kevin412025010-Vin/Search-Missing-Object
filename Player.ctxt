@@ -13,4 +13,6 @@ comment5.params=px\ py\ s
 comment5.target=double\ jarak(int,\ int,\ int[])
 comment6.params=
 comment6.target=void\ updateGambar()
-numComments=7
+comment7.params=dasar
+comment7.target=greenfoot.GreenfootImage\ gambarLompat(greenfoot.GreenfootImage)
+numComments=8
