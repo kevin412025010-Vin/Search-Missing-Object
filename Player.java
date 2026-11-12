@@ -16,7 +16,7 @@ public class Player extends Actor
     private GreenfootImage gBelakang;
     private GreenfootImage gDepan;
 
-    private int ukuran = 50;
+    private int ukuran = 49;
 
     // untuk animasi lompat
     private int timer = 0;
