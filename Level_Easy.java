@@ -16,6 +16,11 @@ public class Level_Easy extends World
     public Level_Easy()
     {    
         // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 400, 1); 
+        super(960, 540, 1);
+        
+        GreenfootImage bg = new GreenfootImage("Level_Easy.jpg");
+        bg.scale(960, 540);
+        
+        setBackground(bg);
     }
 }
