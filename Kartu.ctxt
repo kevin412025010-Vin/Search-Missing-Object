@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=Kartu
+comment1.params=id
+comment1.target=Kartu(int)
+comment2.params=
+comment2.target=void\ tampil()
+comment3.params=
+comment3.target=void\ sembunyi()
+comment4.params=
+comment4.target=int\ getId()
+comment5.params=namaFile
+comment5.target=greenfoot.GreenfootImage\ muat(java.lang.String)
+numComments=6

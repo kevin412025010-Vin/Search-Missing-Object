@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Teks
+comment1.params=isi\ ukuran
+comment1.target=Teks(java.lang.String,\ int)
+comment2.params=baru
+comment2.target=void\ setText(java.lang.String)
+numComments=3
