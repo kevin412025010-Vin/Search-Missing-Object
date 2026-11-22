@@ -201,4 +201,10 @@ public class Player extends Actor
 
         return img;
     }
+    
+    public void setArah(String arahBaru)
+    {
+    arah = arahBaru;
+    updateGambar();
+    }
 }

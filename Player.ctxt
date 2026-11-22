@@ -15,4 +15,6 @@ comment6.params=
 comment6.target=void\ updateGambar()
 comment7.params=dasar
 comment7.target=greenfoot.GreenfootImage\ gambarLompat(greenfoot.GreenfootImage)
-numComments=8
+comment8.params=arahBaru
+comment8.target=void\ setArah(java.lang.String)
+numComments=9

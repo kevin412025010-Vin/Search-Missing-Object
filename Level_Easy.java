@@ -15,13 +15,12 @@ public class Level_Easy extends LevelBase
      */
     public Level_Easy()
     {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(1, 4, 10, 3, 5, "Level_Easy.jpg");
+        super(1, 4, 10, 3, 5, "Level_Easy.jpg", 230, 410);
     }
 
     protected World levelBerikutnya() 
     {
-        return new Level_Normal();
+        return new Map_Awal();
     }
 }
 

@@ -1,10 +1,15 @@
 #BlueJ class context
 comment0.target=Rumah
-comment0.text=\r\n\ Write\ a\ description\ of\ class\ Rumah\ here.\r\n\ \r\n\ @author\ (your\ name)\ \r\n\ @version\ (a\ version\ number\ or\ a\ date)\r\n
 comment1.params=gambar\ level\ lebar
 comment1.target=Rumah(java.lang.String,\ java.lang.String,\ int)
 comment2.params=
 comment2.target=void\ act()
 comment3.params=
-comment3.target=boolean\ playerDekat()
-numComments=4
+comment3.target=int\ nomor()
+comment4.params=
+comment4.target=boolean\ terbuka()
+comment5.params=teks
+comment5.target=void\ tampilkanPesan(java.lang.String)
+comment6.params=
+comment6.target=boolean\ playerDekat()
+numComments=7
