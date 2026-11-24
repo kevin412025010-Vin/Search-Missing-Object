@@ -1,0 +1,15 @@
+#BlueJ class context
+comment0.target=Dialog
+comment1.params=isiCerita
+comment1.target=Dialog(java.lang.String[][])
+comment2.params=
+comment2.target=void\ act()
+comment3.params=i
+comment3.target=void\ mulaiKalimat(int)
+comment4.params=alpha\ kedip
+comment4.target=void\ gambar(int,\ boolean)
+comment5.params=teks
+comment5.target=java.util.List\ bungkus(java.lang.String)
+comment6.params=s
+comment6.target=int\ lebarTeks(java.lang.String)
+numComments=7

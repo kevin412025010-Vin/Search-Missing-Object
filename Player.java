@@ -38,8 +38,7 @@ public class Player extends Actor
         { 669, 268, 696, 252, 28 },
         { 696, 252, 723, 228, 28 },
         { 478, 222, 478, 266, 16 },
-        { 478, 266, 482, 539, 28 },
-        { 431, 373, 478, 370, 28 }
+        { 478, 266, 482, 539, 28 }
     };
 
     public Player()
@@ -59,6 +58,7 @@ public class Player extends Actor
 
     public void act()
     {
+        if (Map_Awal.tutorialAktif) return;
         gerak();
     }
 

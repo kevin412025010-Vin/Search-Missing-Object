@@ -217,7 +217,7 @@ public abstract class LevelBase extends World {
     {
         if (gameOver) 
         {
-            Greenfoot.setWorld(new Map_Awal());
+            Greenfoot.setWorld(new Map_Awal(true));
         } 
         else 
         {

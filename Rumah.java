@@ -6,12 +6,16 @@ public class Rumah extends Actor
     private int px, py;
     private boolean siap = false;
 
+    private int radiusKlik = 60;   // jarak karakter ke rumah agar bisa diklik (BARU)
+
     private final Teks petunjuk = new Teks("Terkunci!", 20);
     private long pesanSampai = 0;
 
     public Rumah(String gambar, String level, int lebar)
     {
         this.level = level;
+        if (level.equals("hard")) radiusKlik = 100;   // lubang lebih besar, jarak klik dilebarkan (BARU)
+
         GreenfootImage img = new GreenfootImage(gambar);
         img.scale(lebar, img.getHeight() * lebar / img.getWidth());
         if (!terbuka()) img.setTransparency(120);   // rumah terkunci tampak pudar
@@ -34,7 +38,7 @@ public class Rumah extends Actor
             getWorld().removeObject(petunjuk);
         }
 
-        if (Greenfoot.mouseClicked(this) && playerDekat())
+        if (Greenfoot.mouseClicked(this) && playerDekat() && !Map_Awal.tutorialAktif)
         {
             if (!terbuka())
             {
@@ -82,6 +86,6 @@ public class Rumah extends Actor
 
     private boolean playerDekat()
     {
-        return !getObjectsInRange(60, Player.class).isEmpty();
+        return !getObjectsInRange(radiusKlik, Player.class).isEmpty();   // sebelumnya angka 60 (DIUBAH)
     }
 }

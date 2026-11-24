@@ -171,7 +171,7 @@ public class Level_Normal extends World {
         {
             if (Greenfoot.mouseClicked(null) || Greenfoot.isKeyDown("space")) 
             {
-                Greenfoot.setWorld(new Map_Awal());
+                Greenfoot.setWorld(new Map_Awal(true));
             }
         }
     }

@@ -20,7 +20,7 @@ public class Level_Easy extends LevelBase
 
     protected World levelBerikutnya() 
     {
-        return new Map_Awal();
+        return new Map_Awal(true);
     }
 }
 

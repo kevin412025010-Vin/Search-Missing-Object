@@ -1,0 +1,13 @@
+#BlueJ class context
+comment0.target=PanelKontrol
+comment1.params=
+comment1.target=PanelKontrol()
+comment2.params=
+comment2.target=void\ act()
+comment3.params=p\ skala
+comment3.target=void\ gambarFrame(double,\ double)
+comment4.params=t
+comment4.target=double\ efekPantul(double)
+comment5.params=namaDasar
+comment5.target=greenfoot.GreenfootImage\ muatGambar(java.lang.String)
+numComments=6
