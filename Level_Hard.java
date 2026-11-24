@@ -1,21 +1,21 @@
-import greenfoot.*;  // (World, Actor, GreenfootImage, Greenfoot and MouseInfo)
+import greenfoot.*;
 
-/**
- * Write a description of class Level_Hard here.
- * 
- * @author (your name) 
- * @version (a version number or a date)
- */
-public class Level_Hard extends World
-{
+public class Level_Hard extends LevelBase {
 
-    /**
-     * Constructor for objects of class Level_Hard.
-     * 
-     */
-    public Level_Hard()
-    {    
-        // Create a new world with 600x400 cells with a cell size of 1x1 pixels.
-        super(600, 400, 1); 
+    public Level_Hard() {
+        super(3, 8, 6, 5, 5, "Level_Hard.jpg", 230, 410);
+
+        if (!Map_Awal.dialogDilihat[3]) {
+            Map_Awal.dialogDilihat[3] = true;
+            tampilkanDialog(Dialog.RUMAH_HARD, "Gondrong");
+        }
+    }
+
+    protected World levelBerikutnya() {
+        return new Map_Awal(true);
+    }
+
+    protected String pesanSelesai() {
+        return "Selamat! Semua level selesai. Skor akhir: " + skorTotal;
     }
 }

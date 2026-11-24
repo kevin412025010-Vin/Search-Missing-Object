@@ -3,13 +3,35 @@ import java.util.*;
 
 public class Dialog extends Actor
 {
-    // ===== ISI CERITA PEMBUKA: ganti sesuka hati, format {pembicara, kalimat} =====
+    // ===== CERITA PEMBUKA: format {pembicara, kalimat} =====
     public static final String[][] PEMBUKA = {
-        {"Narator", "Jauh di dalam gua berkristal, tersimpan ribuan kartu ajaib. Setiap kartu menjaga satu kenangan dari dunia di atas sana."},
-        {"Narator", "Namun suatu malam, cahaya kristal meredup. Kartu-kartu itu berhamburan, dan kenangan di dalamnya perlahan mulai terlupakan."},
-        {"Kamu",    "Kalau kartu-kartu itu hilang, kenangan itu ikut lenyap selamanya. Aku harus menemukan dan mengingatnya kembali."},
-        {"Narator", "Di gua ini berdiri rumah-rumah penjaga kartu. Setiap rumah menyimpan ujian ingatan yang harus kamu selesaikan."},
-        {"Narator", "Perhatikan kartunya baik-baik, ingat posisinya, dan jangan sampai ada yang terlewat. Mulailah dari rumah di tengah."}
+        {"Narator", "Hehehe... selamat datang di Gua Kristal! Kamu datang untuk mencari kartu-kartu yang hilang, bukan?"},
+        {"Narator", "Di dalam gua ini terdapat tiga rumah yang masing - masing memiliki tantangan yang berbeda. Mulai dari yang mudah hingga yang paling sulit. Apakah kamu berani mencobanya?"},
+        {"Kamu",    "..."},
+        {"Narator", "..."},
+        {"Kamu",    "..."},
+        {"Narator", "Kalau begitu, bersiaplah! Masuki rumah pertama dan buktikan seberapa kuat ingatanmu!"}
+    };
+
+    // ===== DIALOG RUMAH 1: Tuytuy (Level Easy) =====
+    public static final String[][] RUMAH_EASY = {
+        {"Tuytuy", "Wih, ada pengunjung! Selamat datang di rumahku. Tenang saja, tantanganku masih mudah kok!"},
+        {"Tuytuy", "Perhatikan baik-baik semua kartu yang terbuka. Ingat posisi dan gambarnya, karena sebentar lagi semua kartu akan tertutup!"},
+        {"Tuytuy", "Sekarang waktunya mencari kartu sesuai gambar yang diminta. Jangan sampai salah pilih, ya! Hehehe!"}
+    };
+
+    // ===== DIALOG RUMAH 2: Kunkun (Level Normal) =====
+    public static final String[][] RUMAH_NORMAL = {
+        {"Kunkun", "Hihihihi... akhirnya kamu sampai juga di rumahku. Tantangan kali ini sedikit lebih sulit, lho!"},
+        {"Kunkun", "Di sini kamu harus membuka dua kartu sekaligus dan menemukan pasangan gambar yang sama. Perhatikan setiap kartu baik-baik!"},
+        {"Kunkun", "Jangan menyerah sebelum semua pasangan ditemukan. Aku akan menunggumu sampai berhasil! Hihihihi!"}
+    };
+
+    // ===== DIALOG RUMAH 3: Gondrong (Level Hard) =====
+    public static final String[][] RUMAH_HARD = {
+        {"Gondrong", "GRRR... jadi kamu berhasil melewati dua rumah sebelumnya. Sekarang saatnya menghadapi tantangan terakhir!"},
+        {"Gondrong", "Di goa ini, kamu harus menggunakan seluruh kemampuanmu. Ingat posisi kartu dan temukan setiap pasangan gambar yang sama!"},
+        {"Gondrong", "Tantangan ini tidak akan mudah! Buktikan bahwa ingatanmu benar-benar kuat dan selesaikan semua kartu yang ada!"}
     };
 
     private static final int LEBAR = 860;
@@ -22,6 +44,7 @@ public class Dialog extends Actor
     private static final int JEDA_AWAL_MS = 300;     // klik dalam 0,3 detik pertama diabaikan
 
     private final String[][] isiCerita;
+    private final String tujuanLevel;                // null = kembali ke peta, atau "easy" / "normal" / "hard"
     private int indeks = 0;
     private List<String> teksBaris = new ArrayList<>();
     private int totalHuruf = 0;
@@ -37,9 +60,17 @@ public class Dialog extends Actor
     private int hurufTerakhir = -1;
     private boolean kedipTerakhir = false;
 
+    // Dialog biasa: setelah selesai, karakter boleh berjalan lagi
     public Dialog(String[][] isiCerita)
     {
+        this(isiCerita, null);
+    }
+
+    // Dialog rumah: setelah selesai, langsung masuk ke level tujuan
+    public Dialog(String[][] isiCerita, String tujuanLevel)
+    {
         this.isiCerita = isiCerita;
+        this.tujuanLevel = tujuanLevel;
         mulaiKalimat(0);
         gambar(0, false);
     }
@@ -54,8 +85,7 @@ public class Dialog extends Actor
             long e = sekarang - mulaiKeluar;
             if (e >= FADE_MS)
             {
-                Map_Awal.tutorialAktif = false;   // cerita selesai, karakter boleh jalan
-                getWorld().removeObject(this);
+                selesai();
                 return;
             }
             alpha = 255 - (int) (255L * e / FADE_MS);
@@ -95,6 +125,28 @@ public class Dialog extends Actor
         if (alpha != alphaTerakhir || hurufTampil != hurufTerakhir || kedip != kedipTerakhir)
         {
             gambar(alpha, kedip);
+        }
+    }
+
+    // dipanggil setelah dialog selesai memudar
+    private void selesai()
+    {
+        if (tujuanLevel == null)
+        {
+            Map_Awal.tutorialAktif = false;   // karakter boleh jalan lagi
+            getWorld().removeObject(this);
+        }
+        else if (tujuanLevel.equals("easy"))
+        {
+            Greenfoot.setWorld(new Level_Easy());
+        }
+        else if (tujuanLevel.equals("normal"))
+        {
+            Greenfoot.setWorld(new Level_Normal());
+        }
+        else
+        {
+            Greenfoot.setWorld(new Level_Hard());
         }
     }
 

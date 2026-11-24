@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=PapanSkor
+comment1.params=
+comment1.target=PapanSkor()
+comment2.params=isi\ ukuran\ warna
+comment2.target=greenfoot.GreenfootImage\ teksBertepi(java.lang.String,\ int,\ greenfoot.Color)
+numComments=3

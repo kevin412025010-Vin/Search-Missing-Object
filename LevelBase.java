@@ -1,5 +1,6 @@
 import greenfoot.*;
 import java.util.*;
+import java.io.*;
 
 public abstract class LevelBase extends World {
 
@@ -11,9 +12,18 @@ public abstract class LevelBase extends World {
     private static final int NYAWA_AWAL = 3;
     private static final int POIN_BENAR = 10;
     private static final int JEDA_FEEDBACK_MS = 1800;
+    private static final int NPC_X = 190;         // posisi karakter saat dialog
+    private static final int NPC_Y = 215;
 
     protected static int skorTotal = 0;
     public static int levelSelesai = 0;
+
+    // ===== Papan skor terbaik (peringkat 1 sampai 3) =====
+    public static final int JUMLAH_REKOR = 3;
+    private static final String FILE_SKOR = "skor_terbaik.txt";
+    private static final List<Integer> rekor = new ArrayList<>();
+    private static boolean rekorDimuat = false;
+    private static int skorTercatat = -1;         // skor permainan ini yang sudah masuk daftar
 
     private final int nomorLevel;
     private final int jumlahKartu;
@@ -26,6 +36,7 @@ public abstract class LevelBase extends World {
     private int ronde = 0;
     private int nyawa = NYAWA_AWAL;
     private boolean gameOver = false;
+    private boolean belumMulai = true;
     private Fase fase;
     private long waktuMulai;
 
@@ -51,16 +62,13 @@ public abstract class LevelBase extends World {
 
         aturLatar(fileLatar);
 
-        if (nomorLevel == 1) skorTotal = 0;
+        if (nomorLevel == 1) mulaiRunBaru();   // masuk Level 1 = permainan baru
 
         for (int i = 1; i <= TOTAL_KARTU; i++) semuaId.add(i);
 
         teksInfo = new Teks(" ", 22);
         teksPesan = new Teks(" ", 30);
-        addObject(teksInfo, 480, 30);
-        addObject(teksPesan, 480, (yKartu + yPilihan) / 2);
-
-        mulaiRonde();
+        // permainan dimulai di act(), setelah dialog (kalau ada) selesai
     }
 
     protected abstract World levelBerikutnya();
@@ -69,6 +77,75 @@ public abstract class LevelBase extends World {
     {
         return "Level selesai!";
     }
+
+    // ===== Skor dan papan peringkat =====
+
+    // Memulai permainan baru: skor kembali 0 dan belum tercatat di papan
+    public static void mulaiRunBaru()
+    {
+        skorTotal = 0;
+        skorTercatat = -1;
+    }
+
+    // Menambah skor dan memperbarui papan peringkat
+    public static void tambahSkor(int poin)
+    {
+        muatRekor();
+        skorTotal += poin;
+
+        // buang entri lama milik permainan ini, lalu masukkan skor terbaru
+        if (skorTercatat >= 0) rekor.remove(Integer.valueOf(skorTercatat));
+        rekor.add(skorTotal);
+        Collections.sort(rekor, Collections.reverseOrder());
+        while (rekor.size() > JUMLAH_REKOR) rekor.remove(rekor.size() - 1);
+
+        skorTercatat = skorTotal;
+        simpanRekor();
+    }
+
+    // Daftar peringkat dari tertinggi ke terendah (maksimal 3 angka)
+    public static List<Integer> ambilRekor()
+    {
+        muatRekor();
+        return new ArrayList<>(rekor);
+    }
+
+    private static void muatRekor()
+    {
+        if (rekorDimuat) return;
+        rekorDimuat = true;
+
+        try (BufferedReader r = new BufferedReader(new FileReader(FILE_SKOR)))
+        {
+            String baris;
+            while ((baris = r.readLine()) != null)
+            {
+                baris = baris.trim();
+                if (!baris.isEmpty()) rekor.add(Integer.parseInt(baris));
+            }
+        }
+        catch (Exception e)
+        {
+            // file belum ada atau rusak: mulai dari kosong
+        }
+
+        Collections.sort(rekor, Collections.reverseOrder());
+        while (rekor.size() > JUMLAH_REKOR) rekor.remove(rekor.size() - 1);
+    }
+
+    private static void simpanRekor()
+    {
+        try (PrintWriter w = new PrintWriter(new FileWriter(FILE_SKOR)))
+        {
+            for (int skor : rekor) w.println(skor);
+        }
+        catch (Exception e)
+        {
+            // gagal menulis file: papan tetap jalan selama Greenfoot terbuka
+        }
+    }
+
+    // ===== Permainan =====
 
     private int posisiX(int i, int n) 
     {
@@ -115,8 +192,29 @@ public abstract class LevelBase extends World {
         teksPesan.setText("Ingat kartunya!");
     }
 
+    // Dipanggil dari constructor level untuk menampilkan dialog sebelum permainan dimulai
+    protected void tampilkanDialog(String[][] cerita, String fileNpc)
+    {
+        addObject(new NPC(fileNpc), NPC_X, NPC_Y);
+        addObject(new Dialog(cerita), 480, 430);
+    }
+
     public void act() 
     {
+        // tunggu dialog selesai dulu, baru permainan dimulai
+        if (belumMulai)
+        {
+            if (getObjects(Dialog.class).isEmpty())
+            {
+                removeObjects(getObjects(NPC.class));   // hapus baris ini kalau karakter mau tetap terlihat
+                belumMulai = false;
+                addObject(teksInfo, 480, 30);
+                addObject(teksPesan, 480, (yKartu + yPilihan) / 2);
+                mulaiRonde();
+            }
+            return;
+        }
+
         long lewat = System.currentTimeMillis() - waktuMulai;
 
         if (fase == Fase.MENGINGAT) 
@@ -180,7 +278,7 @@ public abstract class LevelBase extends World {
 
         if (idDipilih == kartuHilang.getId()) 
         {
-            skorTotal += POIN_BENAR;
+            tambahSkor(POIN_BENAR);
             teksPesan.setText("Benar!  +" + POIN_BENAR);
         } 
         else 

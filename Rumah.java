@@ -6,7 +6,7 @@ public class Rumah extends Actor
     private int px, py;
     private boolean siap = false;
 
-    private int radiusKlik = 60;   // jarak karakter ke rumah agar bisa diklik (BARU)
+    private int radiusKlik = 60;   // jarak karakter ke rumah agar bisa diklik
 
     private final Teks petunjuk = new Teks("Terkunci!", 20);
     private long pesanSampai = 0;
@@ -14,7 +14,7 @@ public class Rumah extends Actor
     public Rumah(String gambar, String level, int lebar)
     {
         this.level = level;
-        if (level.equals("hard")) radiusKlik = 100;   // lubang lebih besar, jarak klik dilebarkan (BARU)
+        if (level.equals("hard")) radiusKlik = 100;   // lubang lebih besar, jarak klik dilebarkan
 
         GreenfootImage img = new GreenfootImage(gambar);
         img.scale(lebar, img.getHeight() * lebar / img.getWidth());
@@ -86,6 +86,6 @@ public class Rumah extends Actor
 
     private boolean playerDekat()
     {
-        return !getObjectsInRange(radiusKlik, Player.class).isEmpty();   // sebelumnya angka 60 (DIUBAH)
+        return !getObjectsInRange(radiusKlik, Player.class).isEmpty();
     }
 }
